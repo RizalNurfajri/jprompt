@@ -6,7 +6,7 @@ import { JSONOutput } from "@/components/JSONOutput"
 import { Toaster } from "@/components/ui/toast"
 import { chatCompletion } from "@/lib/pollinations"
 import { toast } from "sonner"
-import { Github } from "lucide-react"
+
 
 function AppContent() {
   const { apiKey, isLoading: isAuthLoading } = useAuth()
@@ -71,9 +71,6 @@ function AppContent() {
 
           </div>
           <div className="flex items-center gap-4">
-            <a href="https://github.com/pollinations/pollinations" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-zinc-100 transition-colors">
-              <Github className="h-5 w-5" />
-            </a>
             <LoginButton />
           </div>
         </div>
