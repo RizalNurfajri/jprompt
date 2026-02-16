@@ -16,7 +16,7 @@ export function LoginButton() {
 
     if (apiKey) {
         return (
-            <Button variant="outline" onClick={logout} className="text-zinc-100 border-zinc-700 hover:bg-zinc-800 hover:text-white">
+            <Button variant="outline" onClick={logout} className="bg-transparent text-zinc-100 border-zinc-700 hover:bg-zinc-800 hover:text-white">
                 <LogOut className="mr-2 h-4 w-4" />
                 Disconnect Pollinations
             </Button>
