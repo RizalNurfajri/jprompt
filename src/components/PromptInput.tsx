@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Wand2, Loader2 } from "lucide-react"
+import { Wand2, Loader2, Clipboard } from "lucide-react"
 
 interface PromptInputProps {
     onSubmit: (prompt: string) => void
@@ -16,6 +16,15 @@ export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProp
     const handleSubmit = () => {
         if (!prompt.trim()) return
         onSubmit(prompt)
+    }
+
+    const handlePaste = async () => {
+        try {
+            const text = await navigator.clipboard.readText()
+            setPrompt((prev) => prev + text)
+        } catch (err) {
+            console.error("Failed to read clipboard:", err)
+        }
     }
 
     return (
@@ -34,6 +43,17 @@ export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProp
                         onChange={(e) => setPrompt(e.target.value)}
                         disabled={isDisabled || isLoading}
                     />
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute top-3 right-3 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                        onClick={handlePaste}
+                        title="Paste from clipboard"
+                    >
+                        <Clipboard className="w-4 h-4 mr-2" />
+                        Paste
+                    </Button>
                 </div>
             </CardContent>
             <CardFooter className="flex justify-between items-center py-6 px-6 bg-zinc-900/30 border-t border-zinc-800/50 rounded-b-lg">
