@@ -71,7 +71,7 @@ export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProp
                     </Button>
                 </div>
                 <p className="mt-3 text-xs text-zinc-500">
-                    Tip: tekan <span className="text-zinc-300">Ctrl/Cmd + Enter</span> untuk generate lebih cepat.
+                    Tip: press <span className="text-zinc-300">Ctrl/Cmd + Enter</span> to generate faster.
                 </p>
             </CardContent>
             <CardFooter className="flex justify-between items-center py-6 px-6 bg-zinc-900/30 border-t border-zinc-800/50 rounded-b-lg">
