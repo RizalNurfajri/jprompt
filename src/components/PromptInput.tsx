@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState, type KeyboardEvent } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Wand2, Loader2, Clipboard } from "lucide-react"
+import { Wand2, Loader2, Clipboard, Eraser } from "lucide-react"
 
 interface PromptInputProps {
     onSubmit: (prompt: string) => void
@@ -12,9 +12,10 @@ interface PromptInputProps {
 
 export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProps) {
     const [prompt, setPrompt] = useState("")
+    const hasPrompt = !!prompt.trim()
 
     const handleSubmit = () => {
-        if (!prompt.trim()) return
+        if (!hasPrompt) return
         onSubmit(prompt)
     }
 
@@ -24,6 +25,19 @@ export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProp
             setPrompt((prev) => prev + text)
         } catch (err) {
             console.error("Failed to read clipboard:", err)
+        }
+    }
+
+    const handleClear = () => {
+        setPrompt("")
+    }
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+            event.preventDefault()
+            if (!isLoading && !isDisabled && hasPrompt) {
+                handleSubmit()
+            }
         }
     }
 
@@ -41,6 +55,7 @@ export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProp
                         className="relative min-h-[200px] bg-zinc-950/80 border-zinc-800/50 focus-visible:ring-1 focus-visible:ring-zinc-600 focus-visible:border-zinc-600 text-zinc-100 placeholder:text-zinc-600 resize-none text-lg leading-relaxed p-6 shadow-inner tracking-wide"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         disabled={isDisabled || isLoading}
                     />
                     <Button
@@ -55,14 +70,29 @@ export function PromptInput({ onSubmit, isLoading, isDisabled }: PromptInputProp
                         Paste
                     </Button>
                 </div>
+                <p className="mt-3 text-xs text-zinc-500">
+                    Tip: tekan <span className="text-zinc-300">Ctrl/Cmd + Enter</span> untuk generate lebih cepat.
+                </p>
             </CardContent>
             <CardFooter className="flex justify-between items-center py-6 px-6 bg-zinc-900/30 border-t border-zinc-800/50 rounded-b-lg">
-                <span className="text-xs text-zinc-500 font-medium px-2">
-                    {prompt.length} chars
-                </span>
+                <div className="flex items-center gap-3">
+                    <span className="text-xs text-zinc-500 font-medium px-2">
+                        {prompt.length} chars
+                    </span>
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={handleClear}
+                        disabled={!prompt.length || isLoading}
+                        className="text-zinc-300 hover:text-zinc-100 hover:bg-zinc-800/50"
+                    >
+                        <Eraser className="mr-2 h-4 w-4" />
+                        Clear
+                    </Button>
+                </div>
                 <Button
                     onClick={handleSubmit}
-                    disabled={!prompt.trim() || isDisabled || isLoading}
+                    disabled={!hasPrompt || isDisabled || isLoading}
                     size="lg"
                     className="bg-zinc-100 text-zinc-950 hover:bg-white hover:scale-105 active:scale-95 transition-all font-bold shadow-lg shadow-zinc-900/20"
                 >

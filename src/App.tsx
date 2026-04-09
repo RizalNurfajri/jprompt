@@ -77,14 +77,19 @@ function AppContent() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 w-full max-w-4xl px-6 py-12 pt-32 flex flex-col items-center gap-8 z-10">
+      <main className="flex-1 w-full max-w-4xl px-4 sm:px-6 py-10 pt-28 sm:pt-32 flex flex-col items-center gap-8 z-10">
         <div className="text-center space-y-6 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <h2 className="text-5xl md:text-7xl font-extrabold tracking-in text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-zinc-500 drop-shadow-sm">
+          <h2 className="text-4xl md:text-7xl font-extrabold tracking-in text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-zinc-500 drop-shadow-sm">
             Turn Thoughts <br className="hidden md:block" /> into JSON
           </h2>
           <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
             Generate complex, structured prompt configurations for your AI workflows using the power of Qwen Coder.
           </p>
+          <div className="flex flex-wrap justify-center gap-2 text-xs sm:text-sm text-zinc-300">
+            <span className="rounded-full border border-zinc-700 bg-zinc-900/60 px-3 py-1">1. Tulis prompt</span>
+            <span className="rounded-full border border-zinc-700 bg-zinc-900/60 px-3 py-1">2. Generate JSON</span>
+            <span className="rounded-full border border-zinc-700 bg-zinc-900/60 px-3 py-1">3. Copy / Download</span>
+          </div>
         </div>
 
         <PromptInput
